@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: get-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: get
+  template:
+    metadata:
+      labels:
+        app: get
+    spec:
+      containers:
+      - name: getct
+        image: devopsinsiders/micro-gettasks
+        ports:
+        - containerPort: 8000
+        env:
+        - name: CONNECTION_STRING
+          valueFrom:
+           secretKeyRef:
+             key: CONNECTION_STRING
+             name: todosecret
